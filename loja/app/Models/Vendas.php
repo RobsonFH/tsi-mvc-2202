@@ -9,8 +9,15 @@ class Vendas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','cleinte_id','vendedor_id'];
+    protected $fillable = ['id','cleinte_id','vendedor_id', 'data_da_venda'];
 
     protected $table = 'vendas';
 
+        public function comprador(){
+            return $this->beLongsTo(clientes::class, 'cliente_id');
+        }
+
+        public function notaFiscal(){
+            return $this->hasOne(NotasFiscais::class, 'venda_id');
+        }
 }
