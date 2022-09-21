@@ -9,11 +9,11 @@
         </div>
         <div class="pull-right">
 
-        @can('cliente-create')
+
 
             <a class="btn btn-success" href="{{ route('clientes.create') }}"> + Novo cliente</a>
 
-        @endcan
+
 
         </div>
     </div>
@@ -55,7 +55,7 @@
         <a class="btn btn-primary" href="{{ route('clientes.edit',$cliente->id) }}">Editar</a>
 
 
-        {!! Form::open(['method' => 'DELETE','route' => ['clients.destroy', $cliente->id],'style'=>'display:inline']) !!}
+        {!! Form::open(['method' => 'DELETE','route' => ['clientes.destroy', $cliente->id],'style'=>'display:inline']) !!}
 
             {!! Form::submit('Apagar', ['class' => 'btn btn-danger']) !!}
 

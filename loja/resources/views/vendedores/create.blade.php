@@ -5,11 +5,11 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Cadastrar cliente</h2>
+            <h2>Cadastrar Vendedor</h2>
         </div>
 
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('clientes.index') }}"> Voltar</a>
+            <a class="btn btn-primary" href="{{ route('vendedores.index') }}"> Voltar</a>
         </div>
     </div>
 </div>
@@ -31,7 +31,7 @@
 
 @endif
 
-{!! Form::open(array('route' => 'clientes.store','method'=>'POST')) !!}
+{!! Form::open(array('route' => 'vendedores.store','method'=>'POST')) !!}
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
@@ -45,22 +45,8 @@
 
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
-            <strong>Email:</strong>
-            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Endereço:</strong>
-            {!! Form::text('endereco', null, array('placeholder' => 'Endereço','class' => 'form-control')) !!}
-        </div>
-    </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Telefone:</strong>
-            {!! Form::text('telefone', null, array('placeholder' => 'Telefone','class' => 'form-control')) !!}
+            <strong>Matricula:</strong>
+            {!! Form::text('matricula', null, array('placeholder' => 'Matricula','class' => 'form-control')) !!}
         </div>
     </div>
 

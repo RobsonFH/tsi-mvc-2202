@@ -30,7 +30,7 @@
 @endif
 
 
-{!! Form::model($cliente, ['method' => 'PATCH','route' => ['clients.update', $cliente->id]]) !!}
+{!! Form::model($cliente, ['method' => 'PATCH','route' => ['clientes.update', $cliente->id]]) !!}
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">
