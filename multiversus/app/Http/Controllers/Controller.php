@@ -1,5 +1,7 @@
 <?php
 
+
+//controlles são as regras de negocio, ira se comunicar com a modell e com a view.
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
