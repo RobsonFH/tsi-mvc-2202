@@ -16,7 +16,7 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request) //Index Lista os dados da tabela
     {
         $cli = Clientes::orderBy('id', 'ASC')->paginate($this->qtdPorPagina);
         return view('clientes.index', compact('cli'))->with('i',($request->input('page', 1) -1 ) * $this->qtdPorPagina);
@@ -27,7 +27,7 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() //Retorna a view para criar um item da tabela
     {
         return view('clientes.create');
     }
@@ -38,7 +38,7 @@ class ClienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Salva o novo item na tabela
     {
         $this->validate($request, ['nome' => 'required' , 'email' => 'required|email']);
         $input = $request->all();
@@ -54,7 +54,7 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) //Mostra um item especifico (nesse caso clientes)
     {
         $cliente = Clientes::find($id);
         return view ('clientes.show', compact('cliente'));
@@ -67,7 +67,7 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //Retorna a view para a edição do dado.
     {
         $cliente = Clientes::find(id);
 
@@ -81,7 +81,7 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) //Salva a atualização do Dado.
     {
         $this->validate($request, ['nome' => 'required' , 'email' => 'required|email']);
         $input = $request->all();
@@ -99,7 +99,7 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) //Remove o dado
     {
         Clientes::find($id)->delete();
 
