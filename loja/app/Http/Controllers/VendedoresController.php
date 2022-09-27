@@ -13,7 +13,7 @@ class VendedoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request) //Index Lista os dados da tabela
     {
         $vend = Vendedores::orderBy('id', 'ASC')->paginate($this->qtdPorPagina);
         return view('vendedores.index', compact('vend'))->with('i',($request->input('page', 1) -1 ) * $this->qtdPorPagina);
@@ -24,7 +24,7 @@ class VendedoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() //Retorna a view para criar um item da tabela
     {
         return view('vendedores.create');
     }
@@ -35,7 +35,7 @@ class VendedoresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) //Request $request receber a requisição vinda do browser
+    public function store(Request $request) // Salva o novo item na tabela
     {
         $this->validate($request, ['nome' => 'required' , 'matricula' => 'required']);
         $input = $request->all();
@@ -51,7 +51,7 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id)  //Mostra um item especifico 
     {
         $vend = Vendedores::find($id);
         return view ('vendedores.show', compact('vend'));
@@ -64,7 +64,7 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //Retorna a view para a edição do dado.
     {
         $vend = Vendedores::find($id);
 
@@ -78,7 +78,7 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) //Salva a atualização do Dado.
     {
         $this->validate($request, ['nome' => 'required' , 'matricula' => 'required']);
         $input = $request->all();
@@ -96,7 +96,7 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) //Remove o dado
     {
         Vendedores::find($id)->delete();
 
