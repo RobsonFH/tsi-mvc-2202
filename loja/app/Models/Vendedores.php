@@ -14,6 +14,7 @@ class Vendedores extends Model
 
     protected $table = 'vendedores';
 
+    //relacionamento entre tabelas
     public function vendas(){
         return $this->hasMany(vendas::class, 'vendedor_id');
     }
