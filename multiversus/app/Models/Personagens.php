@@ -9,6 +9,7 @@ class Personagens extends Model
 {
     use HasFactory;
 
+    // são os campos que existe na tabela personagens.
     protected $fillable = ['id',
                             'nome',
                                   'classe',
@@ -17,3 +18,4 @@ class Personagens extends Model
 
     protected $table = 'personagens';
 }
+//mostrando qual é a tabela.
