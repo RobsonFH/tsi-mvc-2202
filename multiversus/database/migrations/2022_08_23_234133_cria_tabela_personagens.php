@@ -11,9 +11,9 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up() //controle de versão do banco de dados.
     {
-        Schema::create('personagens', function (Blueprint $table) {
+        Schema::create('personagens', function (Blueprint $table) { //criando um Schema onde mostra todos os campos que contem na tabela personagens.
             $table->id();
             $table->timestamps();
             $table->string('nome');
@@ -32,5 +32,5 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('personagens');
-    }
+    } //Se existir você apaga ela???
 };
