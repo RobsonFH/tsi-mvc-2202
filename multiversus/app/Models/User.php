@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected $fillable = [ // ORM qualquer banco pode ler, mostrar os Atributos da tabela.
         'name',
         'email',
         'password',
@@ -28,7 +28,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $hidden = [
+    protected $hidden = [ // atributos que ficaram ocutos para o usuario.
         'password',
         'remember_token',
     ];
@@ -38,7 +38,7 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
+    protected $casts = [ // Quando o e-mail foi verificado, e retorna a data.
         'email_verified_at' => 'datetime',
     ];
 }
