@@ -13,10 +13,12 @@ class Vendas extends Model
 
     protected $table = 'vendas';
 
+    //relacionamento entre tabelas
         public function comprador(){
             return $this->beLongsTo(clientes::class, 'cliente_id');
         }
 
+    //relacionamento entre tabelas
         public function notaFiscal(){
             return $this->hasOne(NotasFiscais::class, 'venda_id');
         }
