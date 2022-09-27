@@ -9,8 +9,8 @@ class Vendas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','cleinte_id','vendedor_id'];
+    protected $fillable = ['id','cleinte_id','vendedor_id']; // ORM qualquer banco pode ler, mostrar os Atributos da tabela.
 
-    protected $table = 'vendas';
+    protected $table = 'vendas'; //tabela do banco
 
 }
