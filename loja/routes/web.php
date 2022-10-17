@@ -1,29 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\http\Controllers\ClientesController;
-use \App\http\Controllers\VendedoresController;
-use \App\http\Controllers\ProdutosController;
 
-
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-route::get('/avisos', function (){
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
+require __DIR__.'/auth.php';
 
-    $avisos = [ 'avisos'=>[ 0 => ['data' => '06/09/2022', 'aviso' => 'Amanhã será feriado', 'exibir' => true] ,
-                            1 =>['data' => '06/09/2022', 'aviso' => 'Amanhã será feriado', 'exibir' => false],
-                            2 =>['data' => '06/09/2022', 'aviso' => 'Amanhã será feriado', 'exibir' => true]]];
-
-    return view ('avisos', $avisos);
-
+Route::group(['middleware' => ['auth']], function(){
+    Route::resource('/clientes', App\Http\Controllers\ClienteController::class);
+    Route::resource('/vendedores', App\Http\Controllers\VendedoresController::class);
+    Route::resource('/users', App\Http\Controllers\UserController::class);
+    Route::resource('/roles', App\Http\Controllers\RoleController::class);
 });
-
-Route::resource('/clientes', App\Http\Controllers\ClienteController::class);
-Route::resource('/vendedores', App\Http\Controllers\VendedoresController::class);
-Route::resource('/produtos', App\Http\Controllers\ProdutosController::class);
-
-//configurando a rota para achar no browser
