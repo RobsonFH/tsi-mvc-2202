@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use DB;
 
 class RoleController extends Controller
@@ -29,7 +30,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $roles = Role::orderBy('id', 'DESC')->paginate(5);
 
@@ -118,12 +119,12 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, ['name' => 'required',
-                                    'permission' => 'required']);
+                                    'permissions' => 'required']);
 
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
-        $role->syncPermissions($request->input('permission'));//salva as novas permissões
+        $role->syncPermissions($request->input('permissions'));//salva as novas permissões
 
         return redirect()->route('roles.index')->with('sucess', 'Perfil atualizado');
     }

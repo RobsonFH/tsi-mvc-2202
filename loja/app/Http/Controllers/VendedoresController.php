@@ -7,6 +7,24 @@ use \App\Models\Vendedores; //Para poder usar o arquivo model.
 
 class VendedoresController extends Controller
 {
+
+
+    public function __construct(){
+        //tiver qualquer acesso a qualquer uma dessas já pode ver a listagem
+        $this->middleware('permission:vendedores-list|vendedores-create|vendedores-edit|vendedores-delete',
+                            ['only' => ['index', 'show']]);
+
+        //se tiver a permissão vendedores-create pode acessar o create e store
+        $this->middleware( 'permission:vendedores-create',
+                            ['only' => ['create', 'store']]);
+
+        //se tiver permissão para acessar perfil
+        $this->middleware( 'permission:vendedores-edit',
+                            ['only' => ['edit', 'update']]);
+        //se tiver a permissão do delete
+        $this->middleware( 'permission:vendedores-delete',
+                            ['only' => ['destory']]);
+    }
     private $qtdPorPagina = 5;
     /**
      * Display a listing of the resource.
@@ -51,7 +69,7 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)  //Mostra um item especifico 
+    public function show($id)  //Mostra um item especifico
     {
         $vend = Vendedores::find($id);
         return view ('vendedores.show', compact('vend'));

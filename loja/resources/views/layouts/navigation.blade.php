@@ -24,12 +24,13 @@
                     </x-nav-link>
                 </div>
 
+                @can('role-list')
             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('roles.index')" :active="request()->routeIs('roles')">
                         {{ __('Perfis') }}
                     </x-nav-link>
             </div>
-
+                @endcan
             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('vendedores.index')" :active="request()->routeIs('vendedores')">
                         {{ __('Vendedores') }}

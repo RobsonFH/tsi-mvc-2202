@@ -11,8 +11,9 @@
 
 
 
-            <a class="btn btn-success" href="{{ route('clientes.create') }}"> + Novo cliente</a>
 
+
+            <a class="btn btn-success" href="{{ route('clientes.create') }}"> + Novo cliente</a>
 
 
         </div>

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\User;
+use Illuminate\Support\Arr;
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -12,6 +12,24 @@ use Hash;
 
 class UserController extends Controller
 {
+    public function __construct(){
+        //tiver qualquer acesso a qualquer uma dessas já pode ver a listagem
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete',
+                            ['only' => ['index', 'show']]);
+
+        //se tiver a permissão user-create pode acessar o create e store
+        $this->middleware( 'permission:user-create',
+                            ['only' => ['create', 'store']]);
+
+        //se tiver permissão para acessar perfil
+        $this->middleware( 'permission:user-edit',
+                            ['only' => ['edit', 'update']]);
+        //se tiver a permissão do delete
+        $this->middleware( 'permission:user-delete',
+                            ['only' => ['destory']]);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +83,7 @@ class UserController extends Controller
 return view('users.show',compact('user'));
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.

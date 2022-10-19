@@ -23,6 +23,8 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+
+//exemplo com grupo de rotas
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('/clientes', App\Http\Controllers\ClienteController::class);
     Route::resource('/vendedores', App\Http\Controllers\VendedoresController::class);
