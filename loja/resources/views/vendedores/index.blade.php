@@ -38,23 +38,23 @@
    <th width="280px">Ação</th>
  </tr>
 
- @foreach ($vend as $key => $vendedor)
+ @foreach ($vend as $key => $vendedores)
 
   <tr>
-    <td>{{ $vendedor->id }}</td>
-    <td>{{ $vendedor->nome }}</td>
-    <td>{{ $vendedor->matricula }}</td>
+    <td>{{ $vendedores->id }}</td>
+    <td>{{ $vendedores->nome }}</td>
+    <td>{{ $vendedores->matricula }}</td>
 
     <td>
-       <a class="btn btn-info" href="{{ route('vendedores.show',$vendedor->id) }}">Mostrar</a>
+       <a class="btn btn-info" href="{{ route('vendedores.show',$vendedores->id) }}">Mostrar</a>
 
        @can('vendedores-edit')
 
-        <a class="btn btn-primary" href="{{ route('vendedores.edit',$vendedor->id) }}">Editar</a>
+        <a class="btn btn-primary" href="{{ route('vendedores.edit',$vendedores->id) }}">Editar</a>
         @endcan
 
         @can('vendedores-delete')
-        {!! Form::open(['method' => 'DELETE','route' => ['vendedores.destroy', $vendedor->id],'style'=>'display:inline']) !!}
+        {!! Form::open(['method' => 'DELETE','route' => ['vendedores.destroy', $vendedores->id],'style'=>'display:inline']) !!}
 
             {!! Form::submit('Apagar', ['class' => 'btn btn-danger']) !!}
 

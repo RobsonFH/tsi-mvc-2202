@@ -44,16 +44,15 @@
   <tr>
     <td>{{ $produtos->id }}</td>
     <td>{{ $produtos->nome }}</td>
-    <td>{{ $produtos->matricula }}</td>
+    <td>{{ $produtos->descricao }}</td>
+    <td>{{ $produtos->preco }}</td>
 
     <td>
-       <a class="btn btn-info" href="{{ route('produtos.show',$produto->id) }}">Mostrar</a>
+       <a class="btn btn-info" href="{{ route('produtos.show',$produtos->id) }}">Mostrar</a>
+        <a class="btn btn-primary" href="{{ route('produtos.edit',$produtos->id) }}">Editar</a>
 
 
-        <a class="btn btn-primary" href="{{ route('produtos.edit',$produto->id) }}">Editar</a>
-
-
-        {!! Form::open(['method' => 'DELETE','route' => ['produtos.destroy', $vendedor->id],'style'=>'display:inline']) !!}
+        {!! Form::open(['method' => 'DELETE','route' => ['produtos.destroy', $produtos->id],'style'=>'display:inline']) !!}
 
             {!! Form::submit('Apagar', ['class' => 'btn btn-danger']) !!}
 
