@@ -18,7 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1')->group(static function(){ //prefixo para todos os endpoints
+Route::post('login', [App\Http\Controllers\APIController::class, 'login']); //usar o metodo login, com post
+
+Route::get('logout', [App\Http\Controllers\APIController::class, 'logout']);  //usar o metodo logout, com get
+
+Route::group(['middleware' => 'auth.jwt', 'prefix' => 'v1'], static function(){ //prefixo para todos os endpoints
 
     Route::get('/vendedores', [App\Http\Controllers\vendedoresApiController::class, 'index']); //get para obter informações, chama o método index da api controller.
     Route::post('/vendedores', [App\Http\Controllers\vendedoresApiController::class, 'store']);
