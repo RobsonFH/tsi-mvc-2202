@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \App\Models\Vendedores; //Para poder usar o arquivo model.
+use \App\Models\Vendedores;
 
-class VendedoresController extends Controller
+class vendedoresController extends Controller
 {
-
-
     public function __construct(){
         //tiver qualquer acesso a qualquer uma dessas já pode ver a listagem
         $this->middleware('permission:vendedores-list|vendedores-create|vendedores-edit|vendedores-delete',
@@ -31,10 +29,16 @@ class VendedoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request) //Index Lista os dados da tabela
+
+    //Request $request - receber a requisição vinda do browser
+
+    //Lista os dados da tabela
+    public function index(Request $request)
     {
-        $vend = Vendedores::orderBy('id', 'ASC')->paginate($this->qtdPorPagina);
-        return view('vendedores.index', compact('vend'))->with('i',($request->input('page', 1) -1 ) * $this->qtdPorPagina);
+        $vendedor = Vendedores::orderBy('id', 'ASC')->paginate($this->qtdPorPagina);
+        return view('vendedores.index', compact('vendedor'))
+        ->with('i', ($request->input('page', 1) - 1) * $this->qtdPorPagina);
+
     }
 
     /**
@@ -42,7 +46,8 @@ class VendedoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() //Retorna a view para criar um item da tabela
+    //Retorna a View para criar um item da tabela
+    public function create()
     {
         return view('vendedores.create');
     }
@@ -53,14 +58,17 @@ class VendedoresController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // Salva o novo item na tabela
+
+    //Salva o novo item na tabela
+    public function store(Request $request)
     {
-        $this->validate($request, ['nome' => 'required' , 'matricula' => 'required']);
+        $this->validate($request, ['nome'=> 'required',
+                                   'matricula' => 'required']);
         $input = $request->all();
 
-        $vend = Vendedores::create($input);
+        $vendedor = Vendedores::create($input);//recebe os dados que vier do formulário, vai pegar os dados, validar os campos(ex: formato válido para email), pega tudo e joga na variável input que vai para a model Clientes
 
-        return redirect()->route('vendedores.index')->with('succes', 'Vendedor gravado com sucesso!');
+        return redirect()->route('vendedores.index')->with('sucess', 'Vendedor gravado com sucesso!');
     }
 
     /**
@@ -71,9 +79,9 @@ class VendedoresController extends Controller
      */
     public function show($id)  //Mostra um item especifico
     {
-        $vend = Vendedores::find($id);
-        return view ('vendedores.show', compact('vend'));
+        $vendedor = Vendedores::find($id);
 
+        return view('vendedores.show', compact('vendedor'));
     }
 
     /**
@@ -82,11 +90,12 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) //Retorna a view para a edição do dado.
+    //Retorna a View para edição do dado
+    public function edit($id)
     {
-        $vend = Vendedores::find($id);
+        $vendedor = Vendedores::find($id);
 
-        return view('vendedores.edit', compact('vend'));
+        return view ('vendedores.edit', compact('vendedor'));
     }
 
     /**
@@ -96,16 +105,18 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) //Salva a atualização do Dado.
+     //Salva a atualização do dado
+    public function update(Request $request, $id)
     {
-        $this->validate($request, ['nome' => 'required' , 'matricula' => 'required']);
+        $this->validate($request, ['nome'=> 'required',
+                                   'matricula' => 'required']);
         $input = $request->all();
 
-        $vend = Vendedores::find($id);
+        $vendedor = Vendedores::find($id);
 
-        $vend->update($input);
+        $vendedor->update($input);
 
-        return redirect()->route('vendedores.index')->with('success', 'Vendedor atualizado com sucesso!');
+        return redirect()->route('vendedores.index')->with('sucess', 'Vendedor atualizado com sucesso!');
     }
 
     /**
@@ -114,10 +125,53 @@ class VendedoresController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) //Remove o dado
+    // //Remove o dado
+    public function destroy($id)
     {
         Vendedores::find($id)->delete();
 
-        return redirect()->route('vendedores.index')->with('success', 'Vendedor removido com sucesso');
+        return redirect()->route('vendedores.index')->with('sucess', 'Vendedor removido com sucesso!');
+    }
+
+    public function checkVendedor(int $x)
+    {
+        if ($x <= 1) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function existeVendedor(string $nome):bool
+    {
+        $vendedores = ['Paula', 'Matheus', 'Amanda', 'José'];
+
+        if ( in_array($nome, $vendedores) ) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getVendedor(int $id):?string
+    {
+        $vendedores = [1 => 'Paula', 2 => 'Romeu', 3 => 'Amanda', 4 => 'José'];
+
+        if ( isset($vendedores[$id]) ) {
+            return $vendedores[$id];
+        }
+
+        return null;
+    }
+
+    public function getVendedorJSON(int $id):?string
+    {
+        $vendedores = [1 => 'Paula', 2 => 'Romeu', 3 => 'Amanda', 4 => 'José'];
+
+        if ( isset($vendedores[$id]) ) {
+            return json_encode($vendedores[$id]);
+        }
+
+        return null;
     }
 }
