@@ -21,10 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(static function(){ //prefixo para todos os endpoints
 
     Route::get('/vendedores', [App\Http\Controllers\vendedoresApiController::class, 'index']); //get para obter informações, chama o método index da api controller.
-    Route::post('/vendedores', [App\Http\Controllers\vendedoresApiController::class, 'store']);
-    Route::delete('/vendedores/{id}', [App\Http\Controllers\vendedoresApiController::class, 'destroy']);
-    Route::put('/vendedores/{id}', [App\Http\Controllers\vendedoresApiController::class, 'update']);
-    Route::get('/vendedores/{id}', [App\Http\Controllers\vendedoresApiController::class, 'show']);
+    Route::post('/vendedores', [App\Http\Controllers\vendedoresApiController::class, 'store']); //Envia informações
+    Route::delete('/vendedores/{id}', [App\Http\Controllers\vendedoresApiController::class, 'destroy']); //Apaga as informações
+    Route::put('/vendedores/{id}', [App\Http\Controllers\vendedoresApiController::class, 'update']); // Atualiza as informações
+    Route::get('/vendedores/{id}', [App\Http\Controllers\vendedoresApiController::class, 'show']); // obter dado especifico pelo ID
 
     Route::get('/clientes', [App\Http\Controllers\ClientesApiController::class, 'index']);
     Route::get('/clientes/{id}', [App\Http\Controllers\ClientesApiController::class, 'show']); //get para obter informações, chama o método index da api controller.
