@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 use DB;
 
 class RoleController extends Controller
@@ -25,14 +24,16 @@ class RoleController extends Controller
         $this->middleware( 'permission:role-delete',
                             ['only' => ['destory']]);
     }
+    
+    //middleware (AUTENTICAÇÃO)
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(5);
+        $roles = Role::orderBy('id', 'DESC')->paginate(5); //criando uma paginação
 
         return view('roles.index',
                     compact('roles'))->with('i',
@@ -46,7 +47,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
+        $permission = Permission::get(); //pegar os dados da model Permission
 
         return view('roles.create', compact('permission'));
     }
@@ -63,7 +64,7 @@ class RoleController extends Controller
                                    'permission' => 'required']);
 
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($request->input('permission')); //salva as novas permissões 
 
         return redirect()->route('roles.index')->with('success',
                                                       'Perfil criado com sucesso');
@@ -84,7 +85,7 @@ class RoleController extends Controller
                                             "=",
                                             "permissions.id")
                                              ->where("role_has_permissions.role_id", $id)
-                                             ->get();
+                                             ->get(); //retorna o registros que são comuns as duas tabelas
 
         return view('roles.show', compact('role', 'rolePermissions'));
     }
@@ -119,12 +120,12 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, ['name' => 'required',
-                                    'permissions' => 'required']);
+                                    'permission' => 'required']);
 
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
-        $role->syncPermissions($request->input('permissions'));//salva as novas permissões
+        $role->syncPermissions($request->input('permission'));//salva as novas permissões
 
         return redirect()->route('roles.index')->with('sucess', 'Perfil atualizado');
     }
