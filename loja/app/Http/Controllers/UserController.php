@@ -11,15 +11,17 @@ use Hash;
 
 
 class UserController extends Controller
-{
+{s
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    //Index Lista os dados da tabela
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = User::orderBy('id','DESC')->paginate(5); //criando uma paginação, e retornando a view
         return view('users.index',compact('data'))
         ->with('i',($request->input('page',1)-1)*5);
 
@@ -30,10 +32,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() //Retorna a view para criar um item da tabela
     {
-        $roles=Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        $roles=Role::pluck('name','name')->all(); //Extrai a regra de nome da model, e aplica para todos.
+        return view('users.create',compact('roles')); 
     }
 
     /**
@@ -42,15 +44,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // Salva o novo item na tabela (banco)
     {
+        //Validando nome, e-mail, e senha do user
         $this->validate($request,['name'=>'required','email'=>'required|email|unique:users,email','password'=>'required|same:confirm-password','roles'=>'required']);
         $input=$request->all();
-        $input['password']=Hash::make(
-        $input['password']);
+        $input['password']=Hash::make($input['password']); //Verificando a senha do user, e se corresponde com a que ele colocou.
         $user=User::create($input);
-        $user->assignRole($request->input('roles'));
-        return redirect()->route('users.index')->with('success','Usuário criado com sucesso');
+        $user->assignRole($request->input('roles')); //assinar uma regra
+        return redirect()->route('users.index')->with('success','Usuário criado com sucesso'); //redirecionamento para view de usuarios.
     }
 
     /**
@@ -59,10 +61,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id) //Mostra um item especifico (nesse caso user)
     {
-        $user=User::find($id);
-return view('users.show',compact('user'));
+        $user=User::find($id); //buscando o usario pelo id
+        return view('users.show',compact('user')); //retornando o usuario.
     }
 
     
@@ -73,12 +75,12 @@ return view('users.show',compact('user'));
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //Retorna a view para a edição do dado.
     {
-        $user=User::find($id);
-        $roles=Role::pluck('name','name')->all();
-        $userRole=$user->roles->pluck('name','name')->all();
-        return view('users.edit',compact('user','roles','userRole'));
+        $user=User::find($id); //buscando o usuario pelo id
+        $roles=Role::pluck('name','name')->all(); //Extrai a regra de nome da model, e aplica para todos.
+        $userRole=$user->roles->pluck('name','name')->all(); //Extrai a regra de nome da model, e aplica para todos.
+        return view('users.edit',compact('user','roles','userRole')); //retornando a view de usuario (compact, cria um array contendo variaveis e seus valores) (edit)
     }
 
     /**
@@ -88,21 +90,21 @@ return view('users.show',compact('user'));
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) //Salva a atualização do Dado.
     {
-        $this->validate($request,['name'=>'required','email'=>'required|email|unique:users,email,'. $id,'password'=>'same:confirm-password','roles'=>'required']);
+        //Validando nome, e-mail, e senha
+        $this->validate($request,['name'=>'required','email'=>'required|email|unique:users,email,'. $id,'password'=>'same:confirm-password','roles'=>'required']); 
         $input=$request->all();
-        if(!empty($input['password'])){
-        $input['password']=Hash::make(
-        $input['password']);
+        if(!empty($input['password'])){ // Se o campo senha, não for vazio ele cai no input e compara a senha armazenada.
+        $input['password']=Hash::make($input['password']);
         }else{
-        $input=Arr::except($input,array('password'));
+        $input=Arr::except($input,array('password')); //Remove as chave e o valor da senha
         }
-        $user=User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-        $user->assignRole($request->input('roles'));
-        return redirect()->route('users.index')->with('success','Usuário atualizado com sucesso');
+        $user=User::find($id); //acessando usuario
+        $user->update($input); 
+        DB::table('model_has_roles')->where('model_id',$id)->delete(); //Consulta no banco de dados, e chama o metodo delete.
+        $user->assignRole($request->input('roles')); //assinar uma regra
+        return redirect()->route('users.index')->with('success','Usuário atualizado com sucesso'); //Redirecionando para view
             }
 
     /**
@@ -111,10 +113,11 @@ return view('users.show',compact('user'));
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) //Remove o dado
     {
-        User::find($id)->delete();
-return redirect()->route('users.index')->with('success','Usuário removido com sucesso');
+    {
+        User::find($id)->delete(); //busca o usuario pelo id e deleta.
+return redirect()->route('users.index')->with('success','Usuário removido com sucesso'); //Redirecionando para view
 
     }
 }
