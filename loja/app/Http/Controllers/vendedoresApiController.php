@@ -13,7 +13,7 @@ class vendedoresApiController extends Controller
      */
     public function index()
     {
-        return Vendedores::all();
+        return Vendedores::all(); //mostrar todos os vendedores
     }
 
     /**
@@ -35,7 +35,8 @@ class vendedoresApiController extends Controller
     public function store(Request $request)
     {
         $json = $request->getContent();
-        return Vendedores::create(json_decode($json, JSON_OBJECT_AS_ARRAY));
+        return Vendedores::create(json_decode($json, JSON_OBJECT_AS_ARRAY)); 
+        //metodo create espera receber um vetor, e não um objeto (transforma um objeto em um array)
     }
 
     /**
@@ -48,10 +49,10 @@ class vendedoresApiController extends Controller
     {
         $vendedor = Vendedores::find($id);
         if ($vendedor){
-            return $vendedor;
+            return $vendedor; //se o vendedor existe ele retorna vendedor
 
         }else{
-            return json_encode([$id => 'não existe']);
+            return json_encode([$id => 'não existe']); //se não ele transforma em um objeto
         }
     }
 
@@ -78,17 +79,17 @@ class vendedoresApiController extends Controller
         $vendedor = Vendedores::find($id);
         if($vendedor){
             $json = $request->getContent();
-            $atualizacao = json_decode($json, JSON_OBJECT_AS_ARRAY);
+            $atualizacao = json_decode($json, JSON_OBJECT_AS_ARRAY); //Transforma json em array
             $vendedor->nome = $atualizacao['nome'];
             $vendedor->matricula = $atualizacao['matricula'];
-            $ret = $vendedor->update() ? [$id => 'atualização'] : [$id => 'erro ao atualizar'];
+            $ret = $vendedor->update() ? [$id => 'atualização'] : [$id => 'erro ao atualizar']; //if e else ? : 
 
         }else{
             $ret = [$id => 'Não existe'];
 
         }
 
-        return json_encode($ret);
+        return json_encode($ret); // Transforma o ret em objeto.
     }
 
     /**
@@ -102,7 +103,7 @@ class vendedoresApiController extends Controller
         $vendedor = Vendedores::find($id);
 
         if($vendedor){
-            $ret = $vendedor->delete() ? [$id => 'apagado'] : [$id => 'erro ao apagar'];
+            $ret = $vendedor->delete() ? [$id => 'apagado'] : [$id => 'erro ao apagar']; //if else de delete ? :
         }else{
             $ret = [$id => 'não existe'];
         }
