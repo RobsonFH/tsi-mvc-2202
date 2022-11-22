@@ -31,7 +31,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(5);
+        $roles = Role::orderBy('id', 'DESC')->paginate(5); //criando uma paginação
 
         return view('roles.index',
                     compact('roles'))->with('i',
@@ -45,7 +45,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
+        $permission = Permission::get(); //pegar os dados da model Permission
 
         return view('roles.create', compact('permission'));
     }
@@ -62,7 +62,7 @@ class RoleController extends Controller
                                    'permission' => 'required']);
 
         $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $role->syncPermissions($request->input('permission')); //salva as novas permissões 
 
         return redirect()->route('roles.index')->with('success',
                                                       'Perfil criado com sucesso');
@@ -83,7 +83,7 @@ class RoleController extends Controller
                                             "=",
                                             "permissions.id")
                                              ->where("role_has_permissions.role_id", $id)
-                                             ->get();
+                                             ->get(); //retorna o registros que são comuns as duas tabelas
 
         return view('roles.show', compact('role', 'rolePermissions'));
     }
