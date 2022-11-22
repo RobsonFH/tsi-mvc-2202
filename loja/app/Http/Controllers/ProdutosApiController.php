@@ -30,7 +30,7 @@ class ProdutosApiController extends Controller
 
     {
 
-        return Produtos::all();
+        return Produtos::all(); //mostrar todos os produtos
 
     }
 
@@ -106,11 +106,11 @@ class ProdutosApiController extends Controller
 
         if($produto){
 
-            return $produto;
+            return $produto;  //se o produto existe ele retorna vendedor
 
         }else{
 
-            return json_encode([$id => 'não existe']);
+            return json_encode([$id => 'não existe']); //se não ele não existe
 
         }
 
@@ -166,7 +166,7 @@ class ProdutosApiController extends Controller
 
            $json = $request->getContent();
 
-           $atualizacao = json_decode($json, JSON_OBJECT_AS_ARRAY);
+           $atualizacao = json_decode($json, JSON_OBJECT_AS_ARRAY); //Transforma json em array
 
            $produto->nome = $atualizacao['nome'];
 
@@ -174,7 +174,7 @@ class ProdutosApiController extends Controller
 
            $produto->preco = $atualizacao['preco'];
 
-           $ret = $produto->update() ? [$id => 'atualizado'] : [$id => 'erro ao atualizar'];
+           $ret = $produto->update() ? [$id => 'atualizado'] : [$id => 'erro ao atualizar']; //if e else ? : 
 
         }else{
 
@@ -182,7 +182,7 @@ class ProdutosApiController extends Controller
 
         }
 
-        return json_encode($ret);
+        return json_encode($ret); // Transforma o ret em objeto.
 
     }
 
@@ -210,7 +210,7 @@ class ProdutosApiController extends Controller
 
         if($produto){
 
-            $ret = $produto->delete() ? [$id => 'apagado'] : [$id => 'erro ao apagar'];
+            $ret = $produto->delete() ? [$id => 'apagado'] : [$id => 'erro ao apagar']; //if else de delete ? :
 
         }else{
 
