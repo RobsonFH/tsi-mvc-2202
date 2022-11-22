@@ -24,6 +24,8 @@ class RoleController extends Controller
         $this->middleware( 'permission:role-delete',
                             ['only' => ['destory']]);
     }
+    
+    //middleware (AUTENTICAÇÃO)
     /**
      * Display a listing of the resource.
      *
